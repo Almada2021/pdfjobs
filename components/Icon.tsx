@@ -4,11 +4,12 @@ interface IconsProps {
   Ico: IconType;
   click?: () => void;
   title?: string;
+  size?: number
 }
-const Icon: React.FC<IconsProps> = ({ Ico, click, title }) => {
+const Icon: React.FC<IconsProps> = ({ Ico, click, title, size =25 }) => {
   return (
     <div className="bg-white w-max rounded" title={title} onClick={click}>
-      <Ico size={25} />
+      <Ico size={size} />
     </div>
   );
 };

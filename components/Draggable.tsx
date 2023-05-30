@@ -1,20 +1,33 @@
 import useColor from "@/hooks/useColor";
 import { useState } from "react";
 import { Rnd } from "react-rnd";
-import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
+import {
+  AiOutlineArrowUp,
+  AiOutlineArrowDown,
+  AiFillDelete,
+} from "react-icons/ai";
 import { LuPaintBucket } from "react-icons/lu";
-import { TbLetterA } from 'react-icons/tb';
+import { TbLetterA } from "react-icons/tb";
 import Icon from "./Icon";
 import Text from "./dragItems/Text";
 import Photo from "./dragItems/Photo";
+import Title from "./dragItems/Title";
+import useList from "@/hooks/useList";
 interface Props {
   disable?: boolean;
   index?: number;
   type?: "photo" | "text" | "title";
+  arrayPos: number;
 }
 
-const Draggable: React.FC<Props> = ({ disable, index = 0, type = "text" }) => {
+const Draggable: React.FC<Props> = ({
+  disable,
+  index = 0,
+  type = "text",
+  arrayPos,
+}) => {
   const { color } = useColor();
+  const { items, deleteItem } = useList();
   const [currentColor, setCurrentColor] = useState(color);
   const [textColor, setTextColor] = useState<String>("#000");
   const [itemIndex, setItemIndex] = useState<number>(index);
@@ -32,13 +45,11 @@ const Draggable: React.FC<Props> = ({ disable, index = 0, type = "text" }) => {
   const changeText = () => {
     setTextColor(color);
   };
-  let content;
-  switch (type){
-    case "text":
-      content = <Text/>;
-    case "photo":
-      content = <Photo/>
-  }
+  console.log(arrayPos)
+  const remove = () => {
+    deleteItem(arrayPos);
+  };
+
   return (
     <Rnd
       style={{
@@ -66,7 +77,6 @@ const Draggable: React.FC<Props> = ({ disable, index = 0, type = "text" }) => {
                     absolute
                     -top-8
                 "
-
       >
         <div
           className="
@@ -78,10 +88,23 @@ const Draggable: React.FC<Props> = ({ disable, index = 0, type = "text" }) => {
                         
                     "
         >
-          <Icon Ico={AiOutlineArrowUp} click={changeIndex} title="Subir Elemento"/>
-          <Icon Ico={AiOutlineArrowDown} click={changeIndexDown} title="Bajar Elemento"/>
-          <Icon Ico={LuPaintBucket} click={changeColor} title="Rellenar"/>
-          <Icon Ico={TbLetterA} click={changeText} title="Cambiar color de fuente"/>          
+          <Icon
+            Ico={AiOutlineArrowUp}
+            click={changeIndex}
+            title="Subir Elemento"
+          />
+          <Icon
+            Ico={AiOutlineArrowDown}
+            click={changeIndexDown}
+            title="Bajar Elemento"
+          />
+          <Icon Ico={LuPaintBucket} click={changeColor} title="Rellenar" />
+          <Icon
+            Ico={TbLetterA}
+            click={changeText}
+            title="Cambiar color de fuente"
+          />
+          <Icon Ico={AiFillDelete} click={remove} title="Eliminar Elemento" />
         </div>
       </div>
       <div
@@ -91,7 +114,7 @@ const Draggable: React.FC<Props> = ({ disable, index = 0, type = "text" }) => {
           color: `${textColor}`,
         }}
       >
-        {content}
+        {type === "photo" ? <Photo /> : type === "title" ? <Title /> : <Text />}
       </div>
     </Rnd>
   );
