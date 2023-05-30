@@ -117,7 +117,7 @@ const Draggable: React.FC<Props> = ({
           color: `${textColor}`,
         }}
       >
-        {type === "photo" ? <div><ImageUpload onChange={() => {}} label="photo"/></div> : type === "title" ? <Title /> : <Text />}
+        {type === "photo" ? <div><ImageUpload data={data} onChange={() => {}} label="photo"/></div> : type === "title" ? <Title data={data}/> : <Text data={data}/>}
       </div>
     </Rnd>
   );

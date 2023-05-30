@@ -6,12 +6,14 @@ interface ImageUploadProps {
   label: string;
   value?: string;
   disabled?: boolean;
+  data?: any;
 }
 const ImageUpload: React.FC<ImageUploadProps> = ({
   onChange,
   label,
   value,
   disabled,
+  data
 }) => {
   const [base64, setBase64] = useState(value);
   const handleChange = useCallback(
@@ -45,6 +47,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       "image/png": [],
     },
   });
+  console.log(data)
   return (
     <div
       {...getRootProps({
@@ -53,11 +56,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       })}
     >
       <input {...getInputProps()} />
-      {base64 ? (
+      {base64 || data ? (
         <div className="flex items-center justify-center">
           <Image
             draggable={false}
-            src={base64}
+            src={!data ? base64 : data}
             fill={true}
             style={{ objectFit: "cover", overflowY: "hidden" }}
             alt="Uploaded image"

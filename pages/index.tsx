@@ -34,6 +34,18 @@ export default function Home() {
   const addTitle = () => {
     addItem({ position: 0, type: "title" });
   };
+  const addPhotoInfoJobs = () => {
+    addItem({ position: 0, type: "photo", data: user?.photo });
+  };
+  const addName = () => {
+    addItem({ position: 0, type: "title", data: user?.name });
+  };
+  const addDescription = () => {
+    addItem({ position: 0, type: "text", data: user?.description });
+  };
+  const addExpirience = () => {
+    addItem({ position: 0, type: "text", data: user?.expirience });
+  };
   const [user, setUser] = useState<User | null>(null);
   // endpoint de donde se extraeria la data de infoJobs
   useEffect(() => {
@@ -58,13 +70,14 @@ export default function Home() {
           overflow-x-hidden
         "
       >
-        {items.map(({ position, type }, index) => (
+        {items.map(({ position, type, data }, index) => (
           <Draggable
             disable={false}
             arrayPos={index}
             key={index}
             index={position}
             type={type}
+            data={data}
           />
         ))}
       </div>
@@ -142,6 +155,7 @@ export default function Home() {
           </h1>
           <br />
           <button
+            onClick={addPhotoInfoJobs}
             style={{
               borderColor: "#2088c2",
               color: "#2088c2",
@@ -158,10 +172,12 @@ export default function Home() {
             }}
             className="border-2 p-2 font-bold italic rounded"
             title="traer nombre de infojobs"
+            onClick={addName}
           >
             Nombre
           </button>
           <button
+            onClick={addDescription}
             style={{
               borderColor: "#2088c2",
               color: "#2088c2",
@@ -172,6 +188,9 @@ export default function Home() {
             descripcion
           </button>
           <button
+            onClick={
+              addExpirience
+            }
             style={{
               borderColor: "#2088c2",
               color: "#2088c2",
