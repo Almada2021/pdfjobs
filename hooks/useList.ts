@@ -3,6 +3,7 @@ import { create } from "zustand";
 interface Item {
   position: number;
   type: "photo" | "title" | "text";
+  data?: any;
 }
 interface list {
   items: Item[];

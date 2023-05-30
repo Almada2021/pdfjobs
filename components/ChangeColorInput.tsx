@@ -10,8 +10,9 @@ const ChangeColorInput: React.FC<Props> = () => {
         changeColor(e.target.value);
     }
     return (
-        <div>
-            <input type="color" value={color} onChange={onChangeColor}/>
+        <div className="flex" style={{color:color}}>
+            <input className="w-24 h-24" type="color" value={color} onChange={onChangeColor}/>
+            {color}
         </div>
     )
 }

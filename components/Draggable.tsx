@@ -13,11 +13,13 @@ import Text from "./dragItems/Text";
 import Photo from "./dragItems/Photo";
 import Title from "./dragItems/Title";
 import useList from "@/hooks/useList";
+import ImageUpload from "./ImageUpload";
 interface Props {
+  arrayPos: number;
   disable?: boolean;
   index?: number;
   type?: "photo" | "text" | "title";
-  arrayPos: number;
+  data?: any;
 }
 
 const Draggable: React.FC<Props> = ({
@@ -25,9 +27,11 @@ const Draggable: React.FC<Props> = ({
   index = 0,
   type = "text",
   arrayPos,
+  data
+
 }) => {
   const { color } = useColor();
-  const { items, deleteItem } = useList();
+  const { deleteItem } = useList();
   const [currentColor, setCurrentColor] = useState(color);
   const [textColor, setTextColor] = useState<String>("#000");
   const [itemIndex, setItemIndex] = useState<number>(index);
@@ -45,7 +49,6 @@ const Draggable: React.FC<Props> = ({
   const changeText = () => {
     setTextColor(color);
   };
-  console.log(arrayPos)
   const remove = () => {
     deleteItem(arrayPos);
   };
@@ -108,13 +111,13 @@ const Draggable: React.FC<Props> = ({
         </div>
       </div>
       <div
-        className="h-full w-full overflow-hidden"
+        className="h-full w-full overflow-hidden p-2"
         style={{
           backgroundColor: `${currentColor}`,
           color: `${textColor}`,
         }}
       >
-        {type === "photo" ? <Photo /> : type === "title" ? <Title /> : <Text />}
+        {type === "photo" ? <div><ImageUpload onChange={() => {}} label="photo"/></div> : type === "title" ? <Title /> : <Text />}
       </div>
     </Rnd>
   );
